@@ -1,1 +1,1 @@
-"""Posten Norge integration."""
+"""Custom components module."""

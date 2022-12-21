@@ -115,5 +115,5 @@ class PostenOptionsFlowHandler(config_entries.OptionsFlow):
     async def _update_options(self):
         """Update config entry options."""
         return self.async_create_entry(
-            title=self.config_entry.data.get(CONF_USERNAME), data=self.options
+            title=self.config_entry.data.get(CONF_POSTALCODE), data=self.options
         )
