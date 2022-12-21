@@ -4,14 +4,11 @@ NAME = "Når kommer Posten"
 DOMAIN = "posten"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "1.0.0"
-ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
+ATTRIBUTION = "Data provided by https://www.posten.no/levering-av-post/_/component/main/1/leftRegion/1?postCode=xxxx"
 ISSUE_URL = "https://github.com/BobTheShoplifter/HomeAssistant-Posten/issues"
 
 # Icons
 ICON = "mdi:format-quote-close"
-
-# Device classes
-BINARY_SENSOR_DEVICE_CLASS = "connectivity"
 
 # Platforms
 SENSOR = "sensor"

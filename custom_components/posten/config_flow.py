@@ -38,7 +38,7 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             )
             if valid:
                 return self.async_create_entry(
-                    title=user_input[CONF_USERNAME], data=user_input
+                    title=user_input[CONF_POSTALCODE], data=user_input
                 )
             else:
                 self._errors["base"] = "auth"
