@@ -6,6 +6,8 @@ from .const import (
     BINARY_SENSOR_DEVICE_CLASS,
     DEFAULT_NAME,
     DOMAIN,
+    ICON,
+    ICON_OPEN
 )
 from .entity import IntegrationPostenEntity
 
@@ -32,4 +34,14 @@ class IntegrationPostenBinarySensor(IntegrationPostenEntity, BinarySensorEntity)
     @property
     def is_on(self):
         """Return true if the binary_sensor is on."""
-        return self.coordinator.data.get("isStreetAddressReq", "") == "false"
+        nextdelivery = self.coordinator.data.get("nextDeliveryDays")
+
+        return "i dag" in nextdelivery[0]
+
+    @property
+    def icon(self):
+        """Return the icon of the sensor."""
+        nextdelivery = self.coordinator.data.get("nextDeliveryDays")
+        if "i dag" in nextdelivery[0]:
+            return ICON_OPEN
+        return ICON

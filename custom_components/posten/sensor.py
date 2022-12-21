@@ -1,7 +1,7 @@
-"""Sensor platform for integration_posten."""
+"""Sensor platform for posten."""
 from homeassistant.components.sensor import SensorEntity
 
-from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
+from .const import DEFAULT_NAME, DOMAIN, ICON, ICON_OPEN, SENSOR
 from .entity import IntegrationPostenEntity
 
 
@@ -12,7 +12,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
 
 
 class IntegrationPostenSensor(IntegrationPostenEntity, SensorEntity):
-    """integration_posten Sensor class."""
+    """posten Sensor class."""
 
     @property
     def name(self):
@@ -22,9 +22,12 @@ class IntegrationPostenSensor(IntegrationPostenEntity, SensorEntity):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return self.coordinator.data.get("isStreetAddressReq")
+        return self.coordinator.data.get("nextDeliveryDays")
 
     @property
     def icon(self):
         """Return the icon of the sensor."""
+        nextdelivery = self.coordinator.data.get("nextDeliveryDays")
+        if "i dag" in nextdelivery[0]:
+            return ICON_OPEN
         return ICON

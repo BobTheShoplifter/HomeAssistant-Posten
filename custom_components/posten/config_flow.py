@@ -41,6 +41,7 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 self._errors["base"] = "auth"
 
+
             return await self._show_config_form(user_input)
 
         user_input = {}
@@ -69,9 +70,9 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def _test_credentials(self, postalcode):
         """Return true if credentials is valid."""
         try:
-            # session = async_create_clientsession(self.hass)
-            # client = IntegrationPostenApiClient(postalcode, session)
-            # await client.async_get_data()
+            session = async_create_clientsession(self.hass)
+            client = IntegrationPostenApiClient(postalcode, session)
+            await client.async_get_data()
             return True
         except Exception:  # pylint: disable=broad-except
             pass

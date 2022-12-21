@@ -2,7 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "title": "Når kommer posten?",
+                "title": "Når kommer posten",
                 "description": "If you need help with the configuration have a look here: https://github.com/BobTheShoplifter/HomeAssistant-Posten",
                 "data": {
                     "postalcode": "Postcode"

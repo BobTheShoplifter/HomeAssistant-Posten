@@ -27,11 +27,6 @@ class IntegrationPostenApiClient:
         url = "https://www.posten.no/levering-av-post/_/component/main/1/leftRegion/1?postCode="+self._postalcode
         return await self.api_wrapper("get", url, headers=HEADERS)
 
-    async def async_set_title(self, value: str) -> None:
-        """Get data from the API."""
-        url = "https://www.posten.no/levering-av-post/_/component/main/1/leftRegion/1?postCode="+self._postalcode
-        await self.api_wrapper("get", url, data={"title": value}, headers=HEADERS)
-
     async def api_wrapper(
         self, method: str, url: str, data: dict = {}, headers: dict = {}
     ) -> dict:

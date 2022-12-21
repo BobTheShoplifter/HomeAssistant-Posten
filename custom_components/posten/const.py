@@ -8,10 +8,11 @@ ATTRIBUTION = "Data provided by https://www.posten.no/levering-av-post/_/compone
 ISSUE_URL = "https://github.com/BobTheShoplifter/HomeAssistant-Posten/issues"
 
 # Icons
-ICON = "mdi:format-quote-close"
+ICON = "mdi:mailbox"
+ICON_OPEN = "mdi:mailbox-open"
 
 # Device classes
-BINARY_SENSOR_DEVICE_CLASS = "connectivity"
+BINARY_SENSOR_DEVICE_CLASS = "None"
 
 # Platforms
 BINARY_SENSOR = "binary_sensor"

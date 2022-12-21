@@ -45,6 +45,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     client = IntegrationPostenApiClient(postalcode, session)
 
     coordinator = PostenDataUpdateCoordinator(hass, client=client)
+
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:
