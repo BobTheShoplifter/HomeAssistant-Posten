@@ -10,9 +10,13 @@ ISSUE_URL = "https://github.com/BobTheShoplifter/HomeAssistant-Posten/issues"
 # Icons
 ICON = "mdi:format-quote-close"
 
+# Device classes
+BINARY_SENSOR_DEVICE_CLASS = "connectivity"
+
 # Platforms
+BINARY_SENSOR = "binary_sensor"
 SENSOR = "sensor"
-PLATFORMS = [SENSOR]
+PLATFORMS = [BINARY_SENSOR, SENSOR]
 
 
 # Configuration and options

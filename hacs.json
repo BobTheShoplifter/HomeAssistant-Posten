@@ -1,6 +1,7 @@
 {
     "name": "Når kommer posten",
     "domains": [
+        "binary_sensor",
         "sensor"
     ],
     "country": [
