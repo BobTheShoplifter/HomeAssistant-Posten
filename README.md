@@ -1,9 +1,6 @@
 # HomeAssistant-Posten
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/BobTheShoplifter/HomeAssistant-Posten)
 
-
-Posten integrasjon som trigger dagen når posten kommer: https://www.posten.no/levering-av-post
-
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
 [![License][license-shield]][license]
@@ -13,6 +10,8 @@ Posten integrasjon som trigger dagen når posten kommer: https://www.posten.no/l
 [![Discord][discord-shield]][discord]
 
 _Component to integrate with [posten][posten]._
+
+Posten integrasjon som trigger dagen når posten kommer: https://www.posten.no/levering-av-post
 
 **This component will set up the following platforms.**
 
