@@ -6,8 +6,6 @@ import voluptuous as vol
 
 from .api import IntegrationPostenApiClient
 from .const import (
-    CONF_PASSWORD,
-    CONF_USERNAME,
     CONF_POSTALCODE,
     DOMAIN,
     PLATFORMS,
@@ -34,7 +32,7 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             valid = await self._test_credentials(
-                user_input[CONF_USERNAME], user_input[CONF_PASSWORD], user_input[CONF_POSTALCODE]
+                user_input[CONF_POSTALCODE]
             )
             if valid:
                 return self.async_create_entry(
