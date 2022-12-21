@@ -1,6 +1,5 @@
 {
     "name": "Når kommer posten",
-    "iot_class": "Cloud Polling",
     "country": [
         "NO"
     ]
