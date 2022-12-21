@@ -15,6 +15,7 @@ _Component to integrate with [posten][posten]._
 | Platform | Description         |
 | -------- | ------------------- |
 | `sensor` | Show info from API. |
+| `binary_sensor` | Show info from API as True or False based on mail. |
 
 {% if not installed %}
 
