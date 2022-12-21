@@ -13,6 +13,10 @@ _Component to integrate with [posten][posten]._
 
 Posten integrasjon som trigger dagen når posten kommer: https://www.posten.no/levering-av-post
 
+![screenshot](https://i.imgur.com/ZOISPzB.png)
+
+![screenshot2](https://i.imgur.com/A09Ldga.png)
+
 **This component will set up the following platforms.**
 
 | Platform | Description         |
