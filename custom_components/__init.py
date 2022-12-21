@@ -1,0 +1,1 @@
+"""Posten Norge integration."""

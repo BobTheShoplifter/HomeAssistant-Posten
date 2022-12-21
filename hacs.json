@@ -1,0 +1,9 @@
+{
+    "name": "My awesome thing",
+    "domains": [
+        "sensor"
+    ],
+    "country": [
+        "NO"
+    ]
+}

@@ -5,10 +5,16 @@
   "documentation": "https://github.com/BobTheShoplifter/HomeAssistant-Posten",
   "issue_tracker": "https://github.com/BobTheShoplifter/HomeAssistant-Posten/issues",
   "dependencies": [],
-  "after_dependencies": ["http"],
-  "codeowners": ["@BobTheShoplifter"],
+  "after_dependencies": [
+    "http"
+  ],
+  "codeowners": [
+    "@BobTheShoplifter"
+  ],
+  "config_flow": true,
   "requirements": [],
   "quality_scale": "silver",
-  "iot_class": "local_polling"
-  "loggers": []
+  "iot_class": "cloud_polling",
+  "loggers": [],
+  "version": "0.0.1"
 }
