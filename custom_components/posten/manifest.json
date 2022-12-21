@@ -1,0 +1,14 @@
+{
+  "domain": "posten",
+  "name": "Når kommer Posten",
+  "integration_type": "service",
+  "documentation": "https://github.com/BobTheShoplifter/HomeAssistant-Posten",
+  "issue_tracker": "https://github.com/BobTheShoplifter/HomeAssistant-Posten/issues",
+  "dependencies": [],
+  "after_dependencies": ["http"],
+  "codeowners": ["@BobTheShoplifter"],
+  "requirements": [],
+  "quality_scale": "silver",
+  "iot_class": "local_polling"
+  "loggers": []
+}
