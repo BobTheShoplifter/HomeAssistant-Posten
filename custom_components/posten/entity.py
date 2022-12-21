@@ -28,6 +28,6 @@ class IntegrationPostenEntity(CoordinatorEntity):
         """Return the state attributes."""
         return {
             "attribution": ATTRIBUTION,
-            "id": str(self.coordinator.data.get("isStreetAddressReq")),
+            "id": self.unique_id,
             "integration": DOMAIN,
         }
