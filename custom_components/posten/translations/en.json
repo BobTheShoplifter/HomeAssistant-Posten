@@ -21,8 +21,7 @@
             "user": {
                 "data": {
                     "binary_sensor": "Binary sensor enabled",
-                    "sensor": "Sensor enabled",
-                    "switch": "Switch enabled"
+                    "sensor": "Sensor enabled"
                 }
             }
         }
