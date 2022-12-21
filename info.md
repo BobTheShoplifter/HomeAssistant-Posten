@@ -31,7 +31,7 @@ _Component to integrate with [posten][posten]._
 
 ---
 
-[posten]: https://github.com/custom-components/BobTheShoplifter/
+[posten]: https://posten.no
 [commits-shield]: https://img.shields.io/github/commit-activity/y/BobTheShoplifter/HomeAssistant-Posten.svg?style=for-the-badge
 [commits]: https://github.com/BobTheShoplifter/HomeAssistant-Posten/commits/master
 [discord]: https://2o.no/discord
