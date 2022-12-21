@@ -47,8 +47,6 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         user_input = {}
         # Provide defaults for form
-        user_input[CONF_USERNAME] = ""
-        user_input[CONF_PASSWORD] = ""
         user_input[CONF_POSTALCODE] = ""
 
         return await self._show_config_form(user_input)
@@ -64,19 +62,17 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(CONF_USERNAME, default=user_input[CONF_USERNAME]): str,
-                    vol.Required(CONF_PASSWORD, default=user_input[CONF_PASSWORD]): str,
                     vol.Required(CONF_POSTALCODE, default=user_input[CONF_POSTALCODE]): str,
                 }
             ),
             errors=self._errors,
         )
 
-    async def _test_credentials(self, username, password, postalcode):
+    async def _test_credentials(self, postalcode):
         """Return true if credentials is valid."""
         try:
             session = async_create_clientsession(self.hass)
-            client = IntegrationPostenApiClient(username, password, session, postalcode)
+            client = IntegrationPostenApiClient(postalcode, session)
             await client.async_get_data()
             return True
         except Exception:  # pylint: disable=broad-except

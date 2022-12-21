@@ -5,8 +5,6 @@
                 "title": "Når kommer posten?",
                 "description": "If you need help with the configuration have a look here: https://github.com/BobTheShoplifter/HomeAssistant-Posten",
                 "data": {
-                    "username": "Username",
-                    "password": "Password",
                     "postalcode": "Postcode"
                 }
             }

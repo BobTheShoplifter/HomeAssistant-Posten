@@ -16,11 +16,9 @@ HEADERS = {"content-type": "application/json; charset=UTF-8", "x-requested-with"
 
 class IntegrationPostenApiClient:
     def __init__(
-        self, username: str, password: str, session: aiohttp.ClientSession , postalcode: str
+        self, postalcode: str, session: aiohttp.ClientSession
     ) -> None:
         """Sample API Client."""
-        self._username = username
-        self._password = password
         self._session = session
         self._postalcode = postalcode
 

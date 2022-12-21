@@ -5,8 +5,6 @@
                 "title": "Posten",
                 "description": "Hvis du trenger hjep til konfigurasjon ta en titt her: https://github.com/BobTheShoplifter/HomeAssistant-Posten",
                 "data": {
-                    "username": "Brukernavn",
-                    "password": "Passord",
                     "postalcode": "Postnummer"
                 }
             }

@@ -17,9 +17,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .api import IntegrationPostenApiClient
 
 from .const import (
-    CONF_PASSWORD,
     CONF_POSTALCODE,
-    CONF_USERNAME,
     DOMAIN,
     PLATFORMS,
     STARTUP_MESSAGE,
@@ -41,12 +39,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         hass.data.setdefault(DOMAIN, {})
         _LOGGER.info(STARTUP_MESSAGE)
 
-    username = entry.data.get(CONF_USERNAME)
-    password = entry.data.get(CONF_PASSWORD)
     postalcode = entry.data.get(CONF_POSTALCODE)
 
     session = async_get_clientsession(hass)
-    client = IntegrationPostenApiClient(username, password, session, postalcode)
+    client = IntegrationPostenApiClient(postalcode, session)
 
     coordinator = PostenDataUpdateCoordinator(hass, client=client)
     await coordinator.async_refresh()
