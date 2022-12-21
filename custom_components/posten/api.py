@@ -11,7 +11,7 @@ TIMEOUT = 10
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
-HEADERS = {"Content-type": "application/json; charset=UTF-8", "XMLHttpRequest": "XMLHttpRequest"}
+HEADERS = {"content-type": "application/json; charset=UTF-8", "x-requested-with": "XMLHttpRequest"}
 
 
 class IntegrationPostenApiClient:
