@@ -21,14 +21,17 @@ _Component to integrate with [posten][posten]._
 | `sensor` | Show info from API. |
 | `binary_sensor` | Show info from API as True or False based on mail. |
 
-{% if not installed %}
-
 ## Installation
 
-1. Click install.
-1. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Når kommer posten".
+### Method 1 (Installation using HACS)
+1. Go to http://yourhomeassistant:8123/hacs/integrations
+2. Press the 3 dots, click Custom repositories
+3. Add https://github.com/BobTheShoplifter/HomeAssistant-Posten as an integration
+4. Download the integration by searching posten
 
-{% endif %}
+### Method 2 (Manual)
+Copy contents of custom_components/posten/ to custom_components/posten/ in your Home Assistant config folder.
+
 
 ## Configuration is done in the UI
 
