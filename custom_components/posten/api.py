@@ -25,7 +25,7 @@ class IntegrationPostenApiClient:
     async def async_get_data(self) -> dict:
         """Get data from the API."""
         url = "https://www.posten.no/levering-av-post/_/component/main/1/leftRegion/1?postCode="+self._postalcode
-        return await self.api_wrapper("get", url, headers=HEADERS)
+        return await self.api_wrapper(method="get", url=url, headers=HEADERS)
 
     async def api_wrapper(
         self, method: str, url: str, data: dict = {}, headers: dict = {}
@@ -34,17 +34,10 @@ class IntegrationPostenApiClient:
         try:
             async with async_timeout.timeout(TIMEOUT):
                 if method == "get":
-                    response = await self._session.get(url, headers=headers)
+                    response = await self._session.request(method, url, headers=headers)
                     return await response.json()
-
-                elif method == "put":
-                    await self._session.put(url, headers=headers, json=data)
-
-                elif method == "patch":
-                    await self._session.patch(url, headers=headers, json=data)
-
-                elif method == "post":
-                    await self._session.post(url, headers=headers, json=data)
+                else:
+                    await self._session.request(method, url, headers=headers, json=data)
 
         except asyncio.TimeoutError as exception:
             _LOGGER.error(
