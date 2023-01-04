@@ -17,7 +17,7 @@ class IntegrationPostenEntity(CoordinatorEntity):
     @property
     def device_info(self):
         return {
-            "identifiers": {(DOMAIN, self.unique_id)},
+            "identifiers": {(DOMAIN)},
             "name": NAME,
             "model": VERSION,
             "manufacturer": NAME,
