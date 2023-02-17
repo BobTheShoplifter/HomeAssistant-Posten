@@ -3,8 +3,8 @@
 NAME = "Når kommer Posten"
 DOMAIN = "posten"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "0.1.2"
-ATTRIBUTION = "Data provided by https://www.posten.no/levering-av-post/_/component/main/1/leftRegion/5?postCode=xxxx"
+VERSION = "0.1.3"
+ATTRIBUTION = "Data provided by https://www.posten.no/levering-av-post/_/component/main/1/leftRegion/9?postCode=xxxx"
 ISSUE_URL = "https://github.com/BobTheShoplifter/HomeAssistant-Posten/issues"
 
 # Icons
