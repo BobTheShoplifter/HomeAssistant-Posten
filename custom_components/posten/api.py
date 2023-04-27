@@ -1,6 +1,8 @@
 """Sample API Client."""
 import logging
 import asyncio
+import base64
+import time
 import socket
 from typing import Optional
 import aiohttp
@@ -8,10 +10,14 @@ import async_timeout
 
 TIMEOUT = 10
 
+"""I think a way to get around postens stupid api keys, please do not change this posten we are just trying to get your data. Im pretty sure this data goes under offentleglova anyways so please stop changing it <3"""
+token = (base64.b64encode(bytes(base64.b64decode("f3ccd044MTY4MjYyODE2MQ==")[0:6]) + bytes(str(int(time.time())), "utf8")).decode().replace("=", ""))
+
+
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
-HEADERS = {"content-type": "application/json; charset=UTF-8", "x-requested-with": "XMLHttpRequest"}
+HEADERS = {"content-type": "application/json; charset=UTF-8", "x-requested-with": "XMLHttpRequest", "kp-api-token": token}
 
 
 class IntegrationPostenApiClient:
@@ -24,7 +30,7 @@ class IntegrationPostenApiClient:
 
     async def async_get_data(self) -> dict:
         """Get data from the API."""
-        url = "https://www.posten.no/levering-av-post/_/component/main/1/leftRegion/11?postCode="+self._postalcode
+        url = "https://www.posten.no/levering-av-post/_/service/no.posten.website/delivery-days?postalCode="+self._postalcode
         return await self.api_wrapper(method="get", url=url, headers=HEADERS)
 
     async def api_wrapper(
