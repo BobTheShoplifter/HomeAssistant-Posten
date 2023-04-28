@@ -32,8 +32,6 @@ class IntegrationPostenApiClient:
     async def async_get_data(self) -> dict:
         """Get data from the API."""
         url = "https://www.posten.no/levering-av-post/_/service/no.posten.website/delivery-days?postalCode="+self._postalcode
-        _LOGGER.error(url)
-        _LOGGER.error(str(HEADERS))
         return await self.api_wrapper(method="get", url=url, headers=HEADERS)
 
     async def api_wrapper(
@@ -44,7 +42,6 @@ class IntegrationPostenApiClient:
             async with async_timeout.timeout(TIMEOUT):
                 if method == "get":
                     response = await self._session.request(method, url, headers=headers)
-                    _LOGGER.error(str(await response.json()))
                     return await response.json()
                 else:
                     await self._session.request(method, url, headers=headers, json=data)
