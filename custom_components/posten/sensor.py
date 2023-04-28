@@ -1,4 +1,5 @@
 """Sensor platform for posten."""
+import datetime
 from homeassistant.components.sensor import SensorEntity
 
 from .const import DEFAULT_NAME, DOMAIN, ICON, ICON_OPEN, SENSOR
@@ -22,13 +23,18 @@ class IntegrationPostenSensor(IntegrationPostenEntity, SensorEntity):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return self.coordinator.data.get("nextDeliveryDays")
+        return self.coordinator.data.get("delivery_dates")
 
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        nextdelivery = self.coordinator.data.get("nextDeliveryDays")
-        if "i dag" in nextdelivery[0]:
+        nextdelivery = self.coordinator.data.get("delivery_dates")
+
+        year, month, day = map(int, nextdelivery[0].split("-"))
+
+        d1 = datetime.date(year, month, day)
+
+        if datetime.date.today() == d1:
             return ICON_OPEN
         return ICON
 
@@ -49,12 +55,17 @@ class IntegrationPostenSensorNext(IntegrationPostenEntity, SensorEntity):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return self.coordinator.data.get("nextDeliveryDays")[0]
+        return self.coordinator.data.get("delivery_dates")[0]
 
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        nextdelivery = self.coordinator.data.get("nextDeliveryDays")
-        if "i dag" in nextdelivery[0]:
+        nextdelivery = self.coordinator.data.get("delivery_dates")
+
+        year, month, day = map(int, nextdelivery[0].split("-"))
+
+        d1 = datetime.date(year, month, day)
+
+        if datetime.date.today() == d1:
             return ICON_OPEN
         return ICON

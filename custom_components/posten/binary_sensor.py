@@ -1,4 +1,5 @@
 """Binary sensor platform for posten."""
+import datetime
 from homeassistant.components.binary_sensor import BinarySensorEntity
 
 from .const import (
@@ -34,14 +35,23 @@ class IntegrationPostenBinarySensor(IntegrationPostenEntity, BinarySensorEntity)
     @property
     def is_on(self):
         """Return true if the binary_sensor is on."""
-        nextdelivery = self.coordinator.data.get("nextDeliveryDays")
+        nextdelivery = self.coordinator.data.get("delivery_dates")
 
-        return "i dag" in nextdelivery[0]
+        year, month, day = map(int, nextdelivery[0].split("-"))
+
+        d1 = datetime.date(year, month, day)
+
+        return datetime.date.today() == d1
 
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        nextdelivery = self.coordinator.data.get("nextDeliveryDays")
-        if "i dag" in nextdelivery[0]:
+        nextdelivery = self.coordinator.data.get("delivery_dates")
+
+        year, month, day = map(int, nextdelivery[0].split("-"))
+
+        d1 = datetime.date(year, month, day)
+
+        if datetime.date.today() == d1:
             return ICON_OPEN
         return ICON
