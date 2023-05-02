@@ -1,0 +1,10 @@
+# NOTE!: Do NOT add sensetive data here
+
+default_config:
+debugpy:
+
+logger:
+  default: info
+  logs:
+    custom_components.posten: debug
+

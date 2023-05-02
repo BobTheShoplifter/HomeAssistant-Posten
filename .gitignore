@@ -4,3 +4,6 @@ venv
 .venv
 .coverage
 .idea
+config/*
+
+!config/configuration.yaml
