@@ -17,8 +17,6 @@ token = (base64.b64encode(bytes(base64.b64decode("f3ccd044MTY4MjYyODE2MQ==")[0:6
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
-_LOGGER.error(token)
-
 HEADERS = {"content-type": "application/json; charset=UTF-8", "x-requested-with": "XMLHttpRequest", "kp-api-token": token}
 
 class IntegrationPostenApiClient:
