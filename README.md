@@ -28,10 +28,8 @@ Posten integrasjon som trigger dagen når posten kommer: https://www.posten.no/l
 ## Installation
 
 ### Method 1 (Installation using HACS)
-1. Go to http://yourhomeassistant:8123/hacs/integrations
-2. Press the 3 dots, click Custom repositories
-3. Add https://github.com/BobTheShoplifter/HomeAssistant-Posten as an integration
-4. Download the integration by searching posten
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=BobTheShoplifter&repository=HomeAssistant-Posten&category=integration)
 
 ### Method 2 (Manual)
 Copy contents of custom_components/posten/ to custom_components/posten/ in your Home Assistant config folder.
