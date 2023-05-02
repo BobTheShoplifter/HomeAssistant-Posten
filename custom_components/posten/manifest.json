@@ -1,12 +1,12 @@
 {
   "domain": "posten",
   "name": "Når kommer Posten",
+  "codeowners": [
+    "@BobTheShoplifter"
+  ],
+  "config_flow": true,
   "documentation": "https://github.com/BobTheShoplifter/HomeAssistant-Posten",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/BobTheShoplifter/HomeAssistant-Posten/issues",
-  "version": "0.1.5.2",
-  "config_flow": true,
-  "codeowners": [
-    "@BobTheShoplifter"
-  ]
+  "version": "0.1.5.2"
 }
