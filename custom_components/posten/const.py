@@ -37,3 +37,13 @@ If you have any issues with this you need to open an issue here:
 {ISSUE_URL}
 -------------------------------------------------------------------
 """
+
+DAYS = {
+    "0": "Mandag",
+    "1": "Tirsdag",
+    "2": "Onsdag",
+    "3": "Torsdag",
+    "4": "Fredag",
+    "5": "Lørdag",
+    "6": "Søndag",
+}

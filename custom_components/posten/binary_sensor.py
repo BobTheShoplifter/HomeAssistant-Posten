@@ -8,7 +8,7 @@ from .const import (
     DEFAULT_NAME,
     DOMAIN,
     ICON,
-    ICON_OPEN
+    ICON_OPEN,
 )
 from .entity import IntegrationPostenEntity
 
@@ -34,24 +34,11 @@ class IntegrationPostenBinarySensor(IntegrationPostenEntity, BinarySensorEntity)
 
     @property
     def is_on(self):
-        """Return true if the binary_sensor is on."""
-        nextdelivery = self.coordinator.data.get("delivery_dates")
-
-        year, month, day = map(int, nextdelivery[0].split("-"))
-
-        d1 = datetime.date(year, month, day)
-
-        return datetime.date.today() == d1
+        return datetime.date.today() == self._next_delivery
 
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        nextdelivery = self.coordinator.data.get("delivery_dates")
-
-        year, month, day = map(int, nextdelivery[0].split("-"))
-
-        d1 = datetime.date(year, month, day)
-
-        if datetime.date.today() == d1:
+        if datetime.date.today() == self._next_delivery:
             return ICON_OPEN
         return ICON
