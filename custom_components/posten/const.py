@@ -39,11 +39,11 @@ If you have any issues with this you need to open an issue here:
 """
 
 DAYS = {
-    "0": "Mandag",
-    "1": "Tirsdag",
-    "2": "Onsdag",
-    "3": "Torsdag",
-    "4": "Fredag",
-    "5": "Lørdag",
-    "6": "Søndag",
+    "0": "Søndag",
+    "1": "Mandag",
+    "2": "Tirsdag",
+    "3": "Onsdag",
+    "4": "Torsdag",
+    "5": "Fredag",
+    "6": "Lørdag",
 }
