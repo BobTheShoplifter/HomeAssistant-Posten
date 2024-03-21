@@ -14,7 +14,7 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .api import IntegrationPostenApiClient
+from .api import IntegrationPostenApiClient, PostenApiError
 
 from .const import (
     CONF_POSTALCODE,
@@ -46,10 +46,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     coordinator = PostenDataUpdateCoordinator(hass, client=client)
 
-    await coordinator.async_refresh()
-
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
@@ -79,9 +76,16 @@ class PostenDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Update data via library."""
         try:
-            return await self.api.async_get_data()
-        except Exception as exception:
-            raise UpdateFailed() from exception
+            data = await self.api.async_get_data()
+        except PostenApiError as exception:
+            self.logger.error(exception)
+            raise UpdateFailed(exception) from exception
+
+        if not isinstance(data, dict):
+            raise UpdateFailed(f"Invalid data from API {data}")
+
+        return data
+
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
