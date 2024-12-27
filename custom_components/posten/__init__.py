@@ -50,12 +50,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
-    for platform in PLATFORMS:
-        if entry.options.get(platform, True):
-            coordinator.platforms.append(platform)
-            await entry.async_create_task(hass, hass.config_entries.async_forward_entry_setups(entry, platform))
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
+
     return True
 
 
@@ -83,7 +81,6 @@ class PostenDataUpdateCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(f"Invalid data from API {data}")
 
         return data
-
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
