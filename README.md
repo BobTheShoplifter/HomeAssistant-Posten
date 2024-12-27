@@ -28,6 +28,7 @@ Posten integrasjon som trigger dagen når posten kommer: https://www.posten.no/l
 | `sensor` | Show info from API. |
 | `sensor_next` | Show the next delivery date. |
 | `binary_sensor` | Show info from API as True or False based on mail times. |
+| `calendar` | Home assistant local calendar api. |
 
 ## Installation
 
