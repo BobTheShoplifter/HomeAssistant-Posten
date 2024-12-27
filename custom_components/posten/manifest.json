@@ -8,5 +8,13 @@
   "documentation": "https://github.com/BobTheShoplifter/HomeAssistant-Posten",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/BobTheShoplifter/HomeAssistant-Posten/issues",
-  "version": "0.1.9"
+  "version": "0.1.9",
+  "supported_brands": [
+    "posten"
+  ],
+  "supported_platforms": [
+    "sensor",
+    "binary_sensor",
+    "calendar"
+  ]
 }

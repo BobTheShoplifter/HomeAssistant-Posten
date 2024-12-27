@@ -7,4 +7,3 @@ logger:
   default: info
   logs:
     custom_components.posten: debug
-

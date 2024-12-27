@@ -17,7 +17,8 @@ BINARY_SENSOR_DEVICE_CLASS = "None"
 # Platforms
 BINARY_SENSOR = "binary_sensor"
 SENSOR = "sensor"
-PLATFORMS = [BINARY_SENSOR, SENSOR]
+CALENDAR = "calendar"
+PLATFORMS = [BINARY_SENSOR, SENSOR, CALENDAR]
 
 
 # Configuration and options
