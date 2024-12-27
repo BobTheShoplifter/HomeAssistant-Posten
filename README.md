@@ -17,6 +17,10 @@ Posten integrasjon som trigger dagen når posten kommer: https://www.posten.no/l
 
 ![screenshot2](https://i.imgur.com/A09Ldga.png)
 
+![image](https://github.com/user-attachments/assets/176e21eb-611f-4bf3-b9b7-c9636c71fc75)
+
+
+
 **This component will set up the following platforms.**
 
 | Platform | Description         |
