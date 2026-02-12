@@ -45,7 +45,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     session = async_get_clientsession(hass)
     client = IntegrationPostenApiClient(postalcode, session)
 
-    coordinator = PostenDataUpdateCoordinator(hass, client=client)
+    coordinator = PostenDataUpdateCoordinator(hass, client=client, config_entry=entry)
 
     await coordinator.async_config_entry_first_refresh()
 
@@ -62,13 +62,13 @@ class PostenDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
     def __init__(
-        self, hass: HomeAssistant, client: IntegrationPostenApiClient
+        self, hass: HomeAssistant, client: IntegrationPostenApiClient, config_entry: ConfigEntry
     ) -> None:
         """Initialize."""
         self.api = client
         self.platforms = []
 
-        super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
+        super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL, config_entry=config_entry)
 
     async def _async_update_data(self):
         """Update data via library."""
@@ -86,7 +86,9 @@ class PostenDataUpdateCoordinator(DataUpdateCoordinator):
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = hass.data.get(DOMAIN, {}).get(entry.entry_id)
+    if coordinator is None:
+        return True
     unloaded = all(
         await asyncio.gather(
             *[
