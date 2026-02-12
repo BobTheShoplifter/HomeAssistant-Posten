@@ -6,7 +6,9 @@ import voluptuous as vol
 
 from .api import IntegrationPostenApiClient
 from .const import (
+    CONF_EVENT_NAME,
     CONF_POSTALCODE,
+    DEFAULT_EVENT_NAME,
     DOMAIN,
     PLATFORMS,
 )
@@ -97,14 +99,14 @@ class PostenOptionsFlowHandler(config_entries.OptionsFlow):
             self.options.update(user_input)
             return await self._update_options()
 
+        schema = {
+            vol.Required(x, default=self.options.get(x, True)): bool
+            for x in sorted(PLATFORMS)
+        }
+        schema[vol.Optional(CONF_EVENT_NAME, default=self.options.get(CONF_EVENT_NAME, DEFAULT_EVENT_NAME))] = str
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(x, default=self.options.get(x, True)): bool
-                    for x in sorted(PLATFORMS)
-                }
-            ),
+            data_schema=vol.Schema(schema),
         )
 
     async def _update_options(self):

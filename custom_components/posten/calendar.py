@@ -2,15 +2,16 @@ from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.core import callback
 from homeassistant.util.dt import parse_datetime, as_utc, now
 import datetime
-from .const import DOMAIN
+from .const import CONF_EVENT_NAME, DEFAULT_EVENT_NAME, DOMAIN
 
 class PostenCalendarEntity(CalendarEntity):
     """Representation of a Posten Calendar Entity."""
 
-    def __init__(self, coordinator, name, config_entry):
+    def __init__(self, coordinator, name, config_entry, event_name):
         """Initialize the calendar entity."""
         self.coordinator = coordinator
         self._name = name
+        self._event_name = event_name
         self._events = []
         self.config_entry = config_entry
         self._fetch_events()
@@ -53,7 +54,7 @@ class PostenCalendarEntity(CalendarEntity):
             delivery_date = parse_datetime(delivery).date()
             if delivery_date:
                 events.append(CalendarEvent(
-                    summary="Levering",
+                    summary=self._event_name,
                     start=delivery_date,
                     end=delivery_date + datetime.timedelta(days=1)
                 ))
@@ -68,4 +69,5 @@ class PostenCalendarEntity(CalendarEntity):
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
-    async_add_entities([PostenCalendarEntity(coordinator, "Posten Calendar", config_entry)])
+    event_name = config_entry.options.get(CONF_EVENT_NAME, DEFAULT_EVENT_NAME)
+    async_add_entities([PostenCalendarEntity(coordinator, "Posten Calendar", config_entry, event_name)])
