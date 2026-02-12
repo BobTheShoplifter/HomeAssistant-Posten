@@ -45,7 +45,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     session = async_get_clientsession(hass)
     client = IntegrationPostenApiClient(postalcode, session)
 
-    coordinator = PostenDataUpdateCoordinator(hass, client=client)
+    coordinator = PostenDataUpdateCoordinator(hass, client=client, config_entry=entry)
 
     await coordinator.async_config_entry_first_refresh()
 
@@ -62,13 +62,13 @@ class PostenDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
     def __init__(
-        self, hass: HomeAssistant, client: IntegrationPostenApiClient
+        self, hass: HomeAssistant, client: IntegrationPostenApiClient, config_entry: ConfigEntry
     ) -> None:
         """Initialize."""
         self.api = client
         self.platforms = []
 
-        super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
+        super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL, config_entry=config_entry)
 
     async def _async_update_data(self):
         """Update data via library."""
@@ -86,23 +86,13 @@ class PostenDataUpdateCoordinator(DataUpdateCoordinator):
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    unloaded = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-                if platform in coordinator.platforms
-            ]
-        )
-    )
+    unloaded = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unloaded:
-        hass.data[DOMAIN].pop(entry.entry_id)
+        hass.data[DOMAIN].pop(entry.entry_id, None)
 
     return unloaded
 
 
 async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
-    await async_unload_entry(hass, entry)
-    await async_setup_entry(hass, entry)
+    await hass.config_entries.async_reload(entry.entry_id)

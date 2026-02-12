@@ -24,9 +24,11 @@ PLATFORMS = [BINARY_SENSOR, SENSOR, CALENDAR]
 # Configuration and options
 CONF_ENABLED = "enabled"
 CONF_POSTALCODE = "postalcode"
+CONF_EVENT_NAME = "event_name"
 
 # Defaults
 DEFAULT_NAME = DOMAIN
+DEFAULT_EVENT_NAME = "Levering"
 
 
 STARTUP_MESSAGE = f"""
