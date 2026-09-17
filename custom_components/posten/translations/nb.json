@@ -21,7 +21,8 @@
             "user": {
                 "data": {
                     "binary_sensor": "Binær sensor aktivert",
-                    "sensor": "Sensor aktivert"
+                    "sensor": "Sensor aktivert",
+                    "calendar": "Kalender aktivert"
                 }
             }
         }

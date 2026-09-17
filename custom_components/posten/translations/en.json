@@ -21,7 +21,8 @@
             "user": {
                 "data": {
                     "binary_sensor": "Binary sensor enabled",
-                    "sensor": "Sensor enabled"
+                    "sensor": "Sensor enabled",
+                    "calendar": "Calendar enabled"
                 }
             }
         }
