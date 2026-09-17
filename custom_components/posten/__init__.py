@@ -4,14 +4,12 @@ Custom integration to integrate posten with Home Assistant.
 For more details about this integration, please refer to
 https://github.com/BobTheShoplifter/HomeAssistant-Posten
 """
-import asyncio
 from datetime import timedelta
 import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -27,6 +25,13 @@ from .const import (
 SCAN_INTERVAL = timedelta(hours=1)
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
+
+
+def _enabled_platforms(entry: ConfigEntry) -> list[str]:
+    """Return the platforms enabled for a config entry."""
+    return [
+        platform for platform in PLATFORMS if entry.options.get(platform, True)
+    ]
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType):
@@ -46,12 +51,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     client = IntegrationPostenApiClient(postalcode, session)
 
     coordinator = PostenDataUpdateCoordinator(hass, client=client)
+    coordinator.platforms = _enabled_platforms(entry)
 
     await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    await hass.config_entries.async_forward_entry_setups(entry, coordinator.platforms)
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
@@ -66,7 +72,7 @@ class PostenDataUpdateCoordinator(DataUpdateCoordinator):
     ) -> None:
         """Initialize."""
         self.api = client
-        self.platforms = []
+        self.platforms: list[str] = []
 
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
 
@@ -86,23 +92,19 @@ class PostenDataUpdateCoordinator(DataUpdateCoordinator):
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    unloaded = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-                if platform in coordinator.platforms
-            ]
-        )
+    coordinator = hass.data.get(DOMAIN, {}).get(entry.entry_id)
+    if coordinator is None:
+        return True
+
+    unloaded = await hass.config_entries.async_unload_platforms(
+        entry, coordinator.platforms
     )
     if unloaded:
-        hass.data[DOMAIN].pop(entry.entry_id)
+        hass.data[DOMAIN].pop(entry.entry_id, None)
 
     return unloaded
 
 
 async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
-    await async_unload_entry(hass, entry)
-    await async_setup_entry(hass, entry)
+    await hass.config_entries.async_reload(entry.entry_id)

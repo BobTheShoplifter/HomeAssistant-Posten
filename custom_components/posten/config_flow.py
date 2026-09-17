@@ -1,10 +1,10 @@
 """Adds config flow for Posten."""
 from homeassistant import config_entries
 from homeassistant.core import callback
-from homeassistant.helpers.aiohttp_client import async_create_clientsession
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import voluptuous as vol
 
-from .api import IntegrationPostenApiClient
+from .api import IntegrationPostenApiClient, PostenApiError
 from .const import (
     CONF_POSTALCODE,
     DOMAIN,
@@ -31,8 +31,11 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         #     return self.async_abort(reason="single_instance_allowed")
 
         if user_input is not None:
+            postalcode = user_input[CONF_POSTALCODE]
+            await self.async_set_unique_id(postalcode)
+            self._abort_if_unique_id_configured()
             valid = await self._test_credentials(
-                user_input[CONF_POSTALCODE]
+                postalcode
             )
             if valid:
                 return self.async_create_entry(
@@ -61,7 +64,13 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(CONF_POSTALCODE, default=user_input[CONF_POSTALCODE]): str,
+                    vol.Required(
+                        CONF_POSTALCODE, default=user_input[CONF_POSTALCODE]
+                    ): vol.All(
+                        str,
+                        vol.Length(min=4, max=4),
+                        vol.Match(r"^\d{4}$"),
+                    ),
                 }
             ),
             errors=self._errors,
@@ -70,12 +79,12 @@ class PostenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def _test_credentials(self, postalcode):
         """Return true if credentials is valid."""
         try:
-            session = async_create_clientsession(self.hass)
+            session = async_get_clientsession(self.hass)
             client = IntegrationPostenApiClient(postalcode, session)
             await client.async_get_data()
             return True
-        except Exception:  # pylint: disable=broad-except
-            pass
+        except PostenApiError:
+            return False
         return False
 
 

@@ -29,12 +29,12 @@ class IntegrationPostenSensor(IntegrationPostenEntity, SensorEntity):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return self.coordinator.data.get("delivery_dates")
+        return len(self._delivery_dates)
 
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        if datetime.date.today() == self._next_delivery:
+        if self._next_delivery == datetime.date.today():
             return ICON_OPEN
         return ICON
 
@@ -55,12 +55,14 @@ class IntegrationPostenSensorNext(IntegrationPostenEntity, SensorEntity):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
+        if self._next_delivery is None:
+            return None
         return self._next_delivery.strftime("%Y-%m-%d")
 
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        if datetime.date.today() == self._next_delivery:
+        if self._next_delivery == datetime.date.today():
             return ICON_OPEN
         return ICON
 
@@ -82,6 +84,8 @@ class IntegrationPostenSensorNextRelative(IntegrationPostenEntity, SensorEntity)
     def native_value(self):
         """Return the native value of the sensor."""
         today = datetime.date.today()
+        if self._next_delivery is None:
+            return None
         if today == self._next_delivery:
             return "I dag"
         if (today + datetime.timedelta(days=1)) == self._next_delivery:
@@ -91,6 +95,6 @@ class IntegrationPostenSensorNextRelative(IntegrationPostenEntity, SensorEntity)
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        if datetime.date.today() == self._next_delivery:
+        if self._next_delivery == datetime.date.today():
             return ICON_OPEN
         return ICON

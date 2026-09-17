@@ -34,11 +34,11 @@ class IntegrationPostenBinarySensor(IntegrationPostenEntity, BinarySensorEntity)
 
     @property
     def is_on(self):
-        return datetime.date.today() == self._next_delivery
+        return self._next_delivery == datetime.date.today()
 
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        if datetime.date.today() == self._next_delivery:
+        if self._next_delivery == datetime.date.today():
             return ICON_OPEN
         return ICON

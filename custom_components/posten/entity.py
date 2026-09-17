@@ -11,11 +11,27 @@ class IntegrationPostenEntity(CoordinatorEntity):
         self.config_entry = config_entry
 
     @property
-    def _next_delivery(self) -> datetime.date:
+    def _delivery_dates(self) -> list[datetime.date]:
+        """Return valid delivery dates from the coordinator data."""
+        raw_dates = (self.coordinator.data or {}).get("delivery_dates", [])
+        if not isinstance(raw_dates, list):
+            return []
+
+        dates = []
+        for raw_date in raw_dates:
+            if not isinstance(raw_date, str):
+                continue
+            try:
+                dates.append(datetime.date.fromisoformat(raw_date[:10]))
+            except ValueError:
+                continue
+
+        return sorted(set(dates))
+
+    @property
+    def _next_delivery(self) -> datetime.date | None:
         """Return the next delivery as datetime.date."""
-        return datetime.date(
-            *map(int, self.coordinator.data.get("delivery_dates")[0].split("-"))
-        )
+        return next(iter(self._delivery_dates), None)
 
     @property
     def unique_id(self):
@@ -38,4 +54,5 @@ class IntegrationPostenEntity(CoordinatorEntity):
             "attribution": ATTRIBUTION,
             "id": self.unique_id,
             "integration": DOMAIN,
+            "delivery_dates": [date.isoformat() for date in self._delivery_dates],
         }
